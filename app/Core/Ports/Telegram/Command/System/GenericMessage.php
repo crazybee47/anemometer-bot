@@ -3,7 +3,6 @@
 namespace App\Core\Ports\Telegram\Command\System;
 
 use App\Core\Domain\Models\User\Settings\TimezoneSetting;
-use App\Core\Infrastructure\Service\Config;
 use App\Core\Infrastructure\Service\UserService;
 use App\Core\Ports\Telegram\CallbackQuery\Controller\SettingsController;
 use App\Core\Ports\Telegram\Command\Settings\Notifications;
@@ -57,7 +56,7 @@ class GenericMessage extends SystemCommand
             $repliedMessageUsername = $message->getReplyToMessage()->getFrom()->getUsername();
             $repliedMessageText = $message->getReplyToMessage()->getText(true);
 
-            $isCustomNotificationsSettingsSave = $repliedMessageUsername === Config::TELEGRAM_BOT_USERNAME &&
+            $isCustomNotificationsSettingsSave = $repliedMessageUsername === env('TELEGRAM_BOT_USERNAME') &&
                 (strpos($repliedMessageText, 'Max') !== false || strpos($repliedMessageText, 'Min') !== false || strpos($repliedMessageText, 'Avg') !== false);
             if ($isCustomNotificationsSettingsSave) {
                 $user = (new UserService())->initUser($message->getFrom()->getId());

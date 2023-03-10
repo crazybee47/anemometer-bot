@@ -13,8 +13,8 @@ class TelegramNotifier implements NotifierInterface
     public function __construct()
     {
         new Telegram(
-            Config::TELEGRAM_BOT_TOKEN,
-            Config::TELEGRAM_BOT_USERNAME
+            env('TELEGRAM_BOT_TOKEN'),
+            env('TELEGRAM_BOT_USERNAME'),
         );
     }
 
